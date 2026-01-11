@@ -1,8 +1,10 @@
+from typing import Any
 import torch
 from torch import nn
+import pytorch_lightning as pl
 
 
-class MyAwesomeModel(nn.Module):
+class MyAwesomeModel(pl.LightningModule):
     """My awesome model."""
 
     def __init__(self) -> None:
@@ -12,6 +14,7 @@ class MyAwesomeModel(nn.Module):
         self.conv3 = nn.Conv2d(64, 128, 3, 1)
         self.dropout = nn.Dropout(0.5)
         self.fc1 = nn.Linear(128, 10)
+        self.loss_fn = nn.CrossEntropyLoss()
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass."""
@@ -25,6 +28,37 @@ class MyAwesomeModel(nn.Module):
         x = self.dropout(x)
         return self.fc1(x)
 
+    def training_step(self, batch) -> torch.Tensor:
+        """Training step."""
+        x, y = batch
+        y_hat = self(x)
+        loss = self.loss_fn(y_hat, y)
+        self.log("train_loss", loss)
+        return loss
+
+    def validation_step(self, batch, batch_idx=None) -> torch.Tensor:
+        """Validation step."""
+        x, y = batch
+        y_hat = self(x)
+        loss = self.loss_fn(y_hat, y)
+        acc = (y_hat.argmax(dim=1) == y).float().mean()
+        self.log("val_loss", loss, prog_bar=True)
+        self.log("val_accuracy", acc, prog_bar=True)
+        return loss
+
+    def test_step(self, batch, batch_idx=None) -> torch.Tensor:
+        """Test step."""
+        x, y = batch
+        y_hat = self(x)
+        loss = self.loss_fn(y_hat, y)
+        acc = (y_hat.argmax(dim=1) == y).float().mean()
+        self.log("test_loss", loss)
+        self.log("test_accuracy", acc)
+        return loss
+
+    def configure_optimizers(self) -> Any:
+        return torch.optim.Adam(self.parameters(), lr=1e-3)
+    
 
 if __name__ == "__main__":
     model = MyAwesomeModel()
