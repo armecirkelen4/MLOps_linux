@@ -28,12 +28,13 @@ class MyAwesomeModel(pl.LightningModule):
         x = self.dropout(x)
         return self.fc1(x)
 
-    def training_step(self, batch) -> torch.Tensor:
+    def training_step(self, batch, batch_idx=None) -> torch.Tensor:
         """Training step."""
         x, y = batch
         y_hat = self(x)
         loss = self.loss_fn(y_hat, y)
         self.log("train_loss", loss)
+        self.log("train_accuracy", (y_hat.argmax(dim=1) == y).float().mean())
         return loss
 
     def validation_step(self, batch, batch_idx=None) -> torch.Tensor:

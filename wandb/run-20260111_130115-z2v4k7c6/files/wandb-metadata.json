@@ -1,0 +1,28 @@
+{
+  "os":  "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python":  "CPython 3.14.2",
+  "startedAt":  "2026-01-11T12:01:15.344291Z",
+  "program":  "/home/gustav/MLOps/MLOps_linux/mnist_linux/src/mnist_linux_proj/train.py",
+  "codePath":  "mnist_linux/src/mnist_linux_proj/train.py",
+  "codePathLocal":  "mnist_linux/src/mnist_linux_proj/train.py",
+  "git":  {
+    "remote":  "https://github.com/armecirkelen4/MLOps_linux.git",
+    "commit":  "a1039ecea4635a6c864994975da627e6c7180bdf"
+  },
+  "email":  "s214657@dtu.dk",
+  "root":  "/home/gustav/MLOps/MLOps_linux",
+  "host":  "LAPTOP-0QCOR31T",
+  "executable":  "/home/gustav/MLOps/MLOps_linux/.venv/bin/python3",
+  "cpu_count":  6,
+  "cpu_count_logical":  6,
+  "disk":  {
+    "/":  {
+      "total":  "1081101176832",
+      "used":  "20828004352"
+    }
+  },
+  "memory":  {
+    "total":  "3800805376"
+  },
+  "writerId":  "z59ur3hpy43a25klwupqiji7wbbfbs86"
+}

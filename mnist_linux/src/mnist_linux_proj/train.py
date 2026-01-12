@@ -1,12 +1,20 @@
 import matplotlib.pyplot as plt
 import torch
 import typer
+import wandb
 from pathlib import Path
 from data import corrupt_mnist
 from model import MyAwesomeModel
 from torch.utils.data import DataLoader
+import pytorch_lightning as pl
+from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, early_stopping
+
+from dotenv import load_dotenv
+load_dotenv()
+import os
+api_key = os.getenv("WANDB_API_KEY")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -15,6 +23,10 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 1) -> None:
     """Train a model on MNIST using PyTorch Lightning (train/val/test)."""
     print("Training with PyTorch Lightning")
     print(f"{lr=}, {batch_size=}, {epochs=}")
+    wandb.init(
+        project="dtu_mlops",
+        config={"lr": lr, "batch_size": batch_size, "epochs": epochs},
+    )
 
     train_set, test_set = corrupt_mnist()
     # split a validation set from the train set (e.g., 10%)
@@ -51,7 +63,8 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 1) -> None:
         accelerator=accelerator,
         devices=1,
         default_root_dir=PROJECT_ROOT / "lightning_logs",
-        callbacks=[checkpoint_callbacks, early_stopping_callback])
+        callbacks=[checkpoint_callbacks, early_stopping_callback],
+            logger=WandbLogger(project="dtu_mlops"))
 
     trainer.fit(model, train_dataloader, val_dataloader)
 
@@ -64,10 +77,13 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 1) -> None:
     model_dir.mkdir(exist_ok=True)
     torch.save(model.state_dict(), model_dir / "model.pth")
 
+    artifact = wandb.Artifact(
+        name="corrupt_mnist_model",
+        type="model",
+        description="A model trained to classify corrupt MNIST images",
+    )
+    artifact.add_file(f"{model_dir / 'model.pth'}")
+    wandb.log_artifact(artifact)
 
 if __name__ == "__main__":
     typer.run(train)
-    ax[1].plot(statistics["train_accuracy"])
-    ax[1].set_xlabel("Iteration")
-    ax[1].set_ylabel("Accuracy")
-    fig.savefig(figures_dir / "training_statistics.png")

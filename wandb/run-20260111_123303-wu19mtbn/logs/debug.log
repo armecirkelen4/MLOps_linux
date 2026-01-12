@@ -1,0 +1,15 @@
+2026-01-11 12:33:03,394 INFO    MainThread:32786 [wandb_setup.py:_flush():80] Current SDK version is 0.23.1
+2026-01-11 12:33:03,394 INFO    MainThread:32786 [wandb_setup.py:_flush():80] Configure stats pid to 32786
+2026-01-11 12:33:03,394 INFO    MainThread:32786 [wandb_setup.py:_flush():80] Loading settings from /home/gustav/.config/wandb/settings
+2026-01-11 12:33:03,394 INFO    MainThread:32786 [wandb_setup.py:_flush():80] Loading settings from /home/gustav/MLOps/MLOps_linux/wandb/settings
+2026-01-11 12:33:03,394 INFO    MainThread:32786 [wandb_setup.py:_flush():80] Loading settings from environment variables
+2026-01-11 12:33:03,394 INFO    MainThread:32786 [wandb_init.py:setup_run_log_directory():714] Logging user logs to /home/gustav/MLOps/MLOps_linux/wandb/run-20260111_123303-wu19mtbn/logs/debug.log
+2026-01-11 12:33:03,395 INFO    MainThread:32786 [wandb_init.py:setup_run_log_directory():715] Logging internal logs to /home/gustav/MLOps/MLOps_linux/wandb/run-20260111_123303-wu19mtbn/logs/debug-internal.log
+2026-01-11 12:33:03,395 INFO    MainThread:32786 [wandb_init.py:init():841] calling init triggers
+2026-01-11 12:33:03,395 INFO    MainThread:32786 [wandb_init.py:init():846] wandb.init called with sweep_config: {}
+config: {'lr': 0.001, 'batch_size': 32, 'epochs': 1, '_wandb': {}}
+2026-01-11 12:33:03,395 INFO    MainThread:32786 [wandb_init.py:init():889] starting backend
+2026-01-11 12:33:03,700 INFO    MainThread:32786 [wandb_init.py:init():892] sending inform_init request
+2026-01-11 12:33:03,705 INFO    MainThread:32786 [wandb_init.py:init():900] backend started and connected
+2026-01-11 12:33:03,706 INFO    MainThread:32786 [wandb_init.py:init():970] updated telemetry
+2026-01-11 12:33:03,712 INFO    MainThread:32786 [wandb_init.py:init():994] communicating run to backend with 90.0 second timeout
